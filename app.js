@@ -8,16 +8,25 @@ var sassMiddleware = require('node-sass-middleware');
 var colors = require('colors');
 var index = require('./routes/index');
 var users = require('./routes/users');
-var eventemitter3 = require('eventemitter3')
 global.app = express(); //accessible from all over app
 var boot = require('./boot/index')
+app.name = boot.config.app.name
 app.emit("booted");
-//override
-
+//include services
+app.on('assignedId', function() {
+  app.log.debug("Loading Services")
+  require('./service-single/index')
+  app.emit("servicesSingleLoaded")
+  require('./service-multi/index')
+  app.emit("servicesMultiLoaded")
+  //all services are loaded
+  app.emit("servicesLoaded")
+})
 //logger
 var bunyan = require('bunyan');
-var log = bunyan.createLogger({name: 'myapp'});
+var log = bunyan.createLogger({name: app.name});
 app.log = log;
+log.level(boot.config.app.logLevel)
 app.use(function(req, res, next) {
   req.log = log.child({reqId: uuid()});
   next();

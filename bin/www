@@ -13,6 +13,7 @@ if (!cluster.isMaster) {
   app.on('message', function(message) {
     if (message.type === 'id') {
       app.id = message.id;
+      app.emit("assignedId")
     }
   });
 
