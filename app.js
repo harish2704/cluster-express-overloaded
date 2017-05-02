@@ -8,6 +8,7 @@ var sassMiddleware = require('node-sass-middleware');
 var colors = require('colors');
 var index = require('./routes/index');
 var users = require('./routes/users');
+var uuid = require('uuid')
 global.app = express(); //accessible from all over app
 var boot = require('./boot/index')
 app.name = boot.config.app.name
@@ -45,7 +46,7 @@ app.use(cookieParser());
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
-  indentedSyntax: true, // true = .sass and false = .scss
+  indentedSyntax: false, // true = .sass and false = .scss
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));

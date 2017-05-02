@@ -30,3 +30,6 @@ node_modules
 npm-debug.log
 config/app.config.js
 config/app.config.json
+
+#map
+*.map
