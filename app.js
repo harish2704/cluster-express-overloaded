@@ -13,9 +13,6 @@ var boot = require('./boot/index')
 global.app = express(); //accessible from all over app
 //override
 
-//overriding with event emitter
-app.ee3 = eventemitter3;
-
 //logger
 var bunyan = require('bunyan');
 var log = bunyan.createLogger({name: 'myapp'});
