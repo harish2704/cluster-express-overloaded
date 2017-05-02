@@ -9,8 +9,9 @@ var colors = require('colors');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var eventemitter3 = require('eventemitter3')
-var boot = require('./boot/index')
 global.app = express(); //accessible from all over app
+var boot = require('./boot/index')
+app.emit("booted");
 //override
 
 //logger
