@@ -1,7 +1,9 @@
 var requireDirectory = require('require-directory');
-boot = {}
+var onlyjs = /.js$/
+var boot = {}
+
 boot.config = requireDirectory(module, './../config');
-boot.override = requireDirectory(module, './../override');
-boot.components = requireDirectory(module, './../components')
+boot.override = requireDirectory(module, './../override', {include: onlyjs});
+boot.components = requireDirectory(module, './../components', {include: onlyjs})
 console.log(boot);
 module.exports = boot
