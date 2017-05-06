@@ -17,4 +17,4 @@ It is an express framework boilerkit with clusters module implemented. It is a s
 
 # Components
 ## Mail Component
-- app.components.mail(to,from,subject,text,html,transport = "default")
+- app.components.mail(to,from,subject,text,html = text,transport = "default")
