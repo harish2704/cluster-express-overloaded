@@ -2,11 +2,14 @@
   "name": "Cluster Express Overloaded",
   "logLevel": "FATAL",
   "mail" : {
-    "personal" : {
-      "service": "gmail",
-      "auth": {
-          "user": "yourpersonalemail@gmail.com",
-          "pass": "your password here"
+    "default-transporter": "personal",
+    "transporters": {
+      "personal" : {
+        "service": "gmail",
+        "auth": {
+            "user": "yourpersonalemail@gmail.com",
+            "pass": "your password here"
+        }
       }
     }
   }

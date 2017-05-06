@@ -15,6 +15,11 @@ app.config = requireDirectory(module, './../config');
 
 app.set("name", app.config.app.name)
 var boot = require('./boot/index')
+app.components = boot.components
+//routes
+_.each(boot.routes, (route) => {
+  app.use(route.for, route);
+})
 
 app.emit("booted");
 //include services
@@ -25,7 +30,7 @@ app.on('assignedId', () => {
     app.emit("servicesSingleLoaded")
   }
   require('./service-multi/index')
-  app.emit("servicesMultiLoaded")
+  app.emit("servicesMultipleLoaded")
   //all services are loaded
   app.emit("servicesLoaded")
 })
@@ -56,10 +61,6 @@ app.use(sassMiddleware({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, '../public')));
-//routes
-_.each(boot.routes, (route) => {
-  app.use(route.for, route);
-})
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
