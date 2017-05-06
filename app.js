@@ -6,15 +6,14 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
 var colors = require('colors');
-var index = require('./routes/index');
-var users = require('./routes/users');
 var uuid = require('uuid')
+var _ = require('lodash')
 global.app = express(); //accessible from all over app
 var boot = require('./boot/index')
 app.name = boot.config.app.name
 app.emit("booted");
 //include services
-app.on('assignedId', function() {
+app.on('assignedId', () => {
   app.log.debug("Loading Services")
   require('./service-single/index')
   app.emit("servicesSingleLoaded")
@@ -26,8 +25,8 @@ app.on('assignedId', function() {
 //logger
 var bunyan = require('bunyan');
 var log = bunyan.createLogger({name: app.name});
-app.log = log;
 log.level(boot.config.app.logLevel)
+app.log = log;
 app.use(function(req, res, next) {
   req.log = log.child({reqId: uuid()});
   next();
@@ -50,19 +49,20 @@ app.use(sassMiddleware({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', index);
-app.use('/users', users);
+//routes
+_.each(boot.routes, (route) => {
+  app.use(route.for, route);
+})
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development'
