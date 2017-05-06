@@ -40,7 +40,7 @@ var bunyan = require('bunyan')
 var log = bunyan.createLogger({name: app.name})
 log.level(app.config.app.logLevel)
 app.log = log
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   req.log = log.child({reqId: uuid()})
   next()
 })
