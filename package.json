@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "prestart": "npm run -s build",
+    "forever" : "npm run build && forever start --uid ceo --append dist/bin/www",
     "start": "node dist/bin/www --exec \"node -r babel-register\"",
     "start-dev": "nodemon bin/www --exec \"node -r babel-register\" -w .",
     "clean": "rimraf dist",
