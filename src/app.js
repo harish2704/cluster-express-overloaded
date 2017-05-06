@@ -8,15 +8,22 @@ var sassMiddleware = require('node-sass-middleware');
 var colors = require('colors');
 var uuid = require('uuid')
 var _ = require('lodash')
+var requireDirectory = require('require-directory');
+
 global.app = express(); //accessible from all over app
+app.config = requireDirectory(module, './../config');
+
+app.set("name", app.config.app.name)
 var boot = require('./boot/index')
-app.name = boot.config.app.name
+
 app.emit("booted");
 //include services
 app.on('assignedId', () => {
   app.log.debug("Loading Services")
-  require('./service-single/index')
-  app.emit("servicesSingleLoaded")
+  if (app.id === 0) {
+    require('./service-single/index')
+    app.emit("servicesSingleLoaded")
+  }
   require('./service-multi/index')
   app.emit("servicesMultiLoaded")
   //all services are loaded
@@ -25,7 +32,7 @@ app.on('assignedId', () => {
 //logger
 var bunyan = require('bunyan');
 var log = bunyan.createLogger({name: app.name});
-log.level(boot.config.app.logLevel)
+log.level(app.config.app.logLevel)
 app.log = log;
 app.use(function(req, res, next) {
   req.log = log.child({reqId: uuid()});
@@ -48,7 +55,7 @@ app.use(sassMiddleware({
   indentedSyntax: false, // true = .sass and false = .scss
   sourceMap: true
 }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
 //routes
 _.each(boot.routes, (route) => {
   app.use(route.for, route);

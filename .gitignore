@@ -32,3 +32,4 @@ config/app.json
 
 #map
 *.map
+dist/
