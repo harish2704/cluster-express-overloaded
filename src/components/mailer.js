@@ -9,7 +9,7 @@ forOwn(app.config.app.mail.transporters, (config, key) => {
 })
 mailer.transporters['default'] = mailer.transporters[app.config.app.mail.defaultTransporter]
 
-mailer.mail = (to, from, subject, html, text, transport = 'default') => {
+mailer.mail = (to, from, subject, text, html = text, transport = 'default') => {
   let transporter = mailer.transporters[transport]
   if (isArray(to)) {
     to = to.join(',')
@@ -23,6 +23,7 @@ mailer.mail = (to, from, subject, html, text, transport = 'default') => {
   }
 
   // send mail with defined transport object
+  app.emit("beforeEmail", mailOptions)
   transporter.sendMail(mailOptions, (error, info) => {
     app.emit('email', error, info)
     if (error) {
