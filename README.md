@@ -7,6 +7,7 @@ It is an express framework boilerkit with clusters module implemented. It is a s
 - app.on("servicesMultipleLoaded") //Loads services in all cluster (folder service-multi)
 
 ## Email Events
+- app.on("beforeEmail", mailOptions) //before initiating emails with options
 - app.on("email", err,info) //despite sucess/error
 - app.on("emailSent", info) //on success
 - app.on("errorOnEmail", err,info) //on error
