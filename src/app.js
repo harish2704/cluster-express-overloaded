@@ -17,6 +17,7 @@ app.config = requireDirectory(module, './../config')
 app.set('name', app.config.app.name)
 var boot = require('./boot/index')
 app.components = boot.components
+
 app.middleware = requireDirectory(module, './middleware')
 console.log(app.middleware)
 // routes

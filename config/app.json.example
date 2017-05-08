@@ -2,6 +2,17 @@
   "name": "Cluster Express Overloaded",
   "logLevel": "FATAL",
   "secret": "some-insane-string",
+  "fileCache": {
+    "tmpDir": "./cache",
+    "ttl": "259200"
+  },
+  "redisCache": {
+    "host": "127.0.0.1",
+    "port": "6379",
+    "database": 2,
+    "password": "cute-password",
+    "ttl": "259200"
+  },
   "redisSession": {
     "host": "127.0.0.1",
     "port": "6379",
