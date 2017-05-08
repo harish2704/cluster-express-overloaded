@@ -33,3 +33,6 @@ config/app.json
 #map
 *.map
 dist/
+temp/
+tmp/
+cache/
