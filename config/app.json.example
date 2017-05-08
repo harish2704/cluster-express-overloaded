@@ -1,6 +1,15 @@
 {
   "name": "Cluster Express Overloaded",
   "logLevel": "FATAL",
+  "secret": "some-insane-string",
+  "redisSession": {
+    "host": "127.0.0.1",
+    "port": "6379",
+    "ttl": 15768000,
+    "db": 1,
+    "pass": "cute-password",
+    "prefix": "session_"
+  },
   "mail" : {
     "default-transporter": "personal",
     "transporters": {

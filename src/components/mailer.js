@@ -23,7 +23,7 @@ mailer.mail = (to, from, subject, text, html = text, transport = 'default') => {
   }
 
   // send mail with defined transport object
-  app.emit("beforeEmail", mailOptions)
+  app.emit('beforeEmail', mailOptions)
   transporter.sendMail(mailOptions, (error, info) => {
     app.emit('email', error, info)
     if (error) {
