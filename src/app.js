@@ -30,10 +30,10 @@ app.emit('booted')
 app.on('assignedId', () => {
   app.log.debug('Loading Services')
   if (app.id === 0) {
-    require('./service-single/index')
+    requireDirectory('./service-single')
     app.emit('servicesSingleLoaded')
   }
-  require('./service-multi/index')
+  requireDirectory('./service-multi/')
   app.emit('servicesMultipleLoaded')
   // all services are loaded
   app.emit('servicesLoaded')
